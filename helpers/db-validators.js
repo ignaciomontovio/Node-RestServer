@@ -17,7 +17,6 @@ const emailExiste = async(correo = '') => {
     }
 }
 
-
 const esRoleValido = async (rol='') => {
     const  existeRol = await Role.findOne({rol});
     if(!existeRol){
@@ -37,10 +36,20 @@ const existeProductoPorId = async (id = '') => {
         throw new Error(`El id de producto ${id} no existe en la BD`);
     }
 }
+
+// Validar colecciones permitidas
+const coleccionesPermitidas = (coleccion = '',colecciones = []) =>{
+    const incluida = colecciones.includes(coleccion);
+    if(!incluida){
+        throw new Error(`La coleccion ${coleccion} no es permitida. [${colecciones}]`)
+    }
+    return true;
+}
 module.exports = {
     existeCategoriaPorId,
     esRoleValido,
     emailExiste,
     existeUsuarioPorId,
-    existeProductoPorId
+    existeProductoPorId,
+    coleccionesPermitidas
 }
